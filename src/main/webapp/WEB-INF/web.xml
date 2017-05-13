@@ -14,4 +14,27 @@
         <servlet-name>simple</servlet-name>
         <url-pattern>/simple</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>escribe</servlet-name>
+        <servlet-class>
+            com.cursos2ee.web.SimpleConnectorWriteServlet
+        </servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>escribe</servlet-name>
+        <url-pattern>/escribe</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>lee</servlet-name>
+        <servlet-class>
+            com.cursos2ee.web.SimpleConnectorReadServlet
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>lee</servlet-name>
+        <url-pattern>/lee</url-pattern>
+    </servlet-mapping>
 </web-app>
