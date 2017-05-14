@@ -2,3 +2,5 @@
 /target/
 /.idea/
 /cursos2ee.iml
+/derby.log
+/CURSOS2eeDB

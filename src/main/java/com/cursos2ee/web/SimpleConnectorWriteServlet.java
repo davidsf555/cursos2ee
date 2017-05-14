@@ -13,6 +13,7 @@ import java.sql.*;
  */
 public class SimpleConnectorWriteServlet extends HttpServlet {
 
+    private static final String CURSOS_TABLE = "CURSOS";
     Connection conn;
 
     @Override
@@ -46,11 +47,13 @@ public class SimpleConnectorWriteServlet extends HttpServlet {
         try {
             Statement statement = conn.createStatement();
 
-            boolean existCursosTable = conn.getMetaData().getTables(null, null, "cursos", new String[]{"TABLE"}).last();
+            boolean existCursosTable = conn.getMetaData().getTables(null, null, CURSOS_TABLE, new String[]{"TABLE"}).next();
             if (!existCursosTable) {
-                statement.executeUpdate("Create table cursos (id int primary key AUTO_INCREMENT, nombre varchar(30))");
+                statement.executeUpdate("Create table "+CURSOS_TABLE+" (id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), nombre varchar(30))");
             }
-            statement.executeUpdate("insert into cursos (nombre) values ('Mi nombre')");
+            int inserted = statement.executeUpdate("insert into "+CURSOS_TABLE+" (nombre) values ('Mi nombre')");
+
+            System.out.println("Inserted:"+inserted);
 
             statement.close();
         } catch (SQLException e) {
@@ -66,7 +69,7 @@ public class SimpleConnectorWriteServlet extends HttpServlet {
     }
 
     private void connectionToDerby() throws SQLException {
-        String dbUrl = "jdbc:derby:cursos2ee;create=true";
+        String dbUrl = "jdbc:derby:cursos2eeDB;create=true";
         conn = DriverManager.getConnection(dbUrl);
     }
 }

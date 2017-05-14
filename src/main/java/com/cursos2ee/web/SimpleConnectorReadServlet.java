@@ -49,9 +49,10 @@ public class SimpleConnectorReadServlet extends HttpServlet {
         try {
             Statement statement = conn.createStatement();
 
-            boolean existCursosTable = conn.getMetaData().getTables(null, null, "cursos", new String[]{"TABLE"}).last();
+            boolean existCursosTable = conn.getMetaData().getTables(null, null, "CURSOS", new String[]{"TABLE"}).next();
             if (existCursosTable) {
-                ResultSet resultSet = statement.executeQuery("select nombre from cursos");
+                System.out.println("Existe");
+                ResultSet resultSet = statement.executeQuery("select nombre from CURSOS");
                 while(resultSet.next()){
                     nombres.add(resultSet.getString("nombre"));
                 }
@@ -71,7 +72,7 @@ public class SimpleConnectorReadServlet extends HttpServlet {
     }
 
     private void connectionToDerby() throws SQLException {
-        String dbUrl = "jdbc:derby:cursos2ee;create=true";
+        String dbUrl = "jdbc:derby:CURSOS2eeDB;create=true";
         conn = DriverManager.getConnection(dbUrl);
     }
 }
