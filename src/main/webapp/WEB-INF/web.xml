@@ -5,36 +5,13 @@
 <web-app>
     <display-name>Cursos2ee</display-name>
     <servlet>
-        <servlet-name>simple</servlet-name>
+        <servlet-name>controller</servlet-name>
         <servlet-class>
-            com.cursos2ee.web.SimpleServlet
+            com.cursos2ee.web.ControllerServlet
         </servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>simple</servlet-name>
-        <url-pattern>/simple</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>escribe</servlet-name>
-        <servlet-class>
-            com.cursos2ee.web.SimpleConnectorWriteServlet
-        </servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>escribe</servlet-name>
-        <url-pattern>/escribe</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>lee</servlet-name>
-        <servlet-class>
-            com.cursos2ee.web.SimpleConnectorReadServlet
-        </servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>lee</servlet-name>
-        <url-pattern>/lee</url-pattern>
+        <servlet-name>controller</servlet-name>
+        <url-pattern>/controller</url-pattern>
     </servlet-mapping>
 </web-app>
