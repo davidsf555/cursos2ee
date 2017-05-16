@@ -1,7 +1,7 @@
 package com.cursos2ee.model;
 
 /**
- * Niveles y codigos validos para cursos
+ * Levels and codes for cursos
  * Created by usuario on 14/05/2017.
  */
 public enum Nivel {

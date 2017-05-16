@@ -3,7 +3,7 @@ package com.cursos2ee.model;
 import java.util.Objects;
 
 /**
- * Datos descriptivos de un curso
+ * A curso define description data for a course
  * Created by usuario on 14/05/2017.
  */
 public class Curso {

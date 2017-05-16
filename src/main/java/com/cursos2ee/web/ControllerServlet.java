@@ -1,5 +1,7 @@
 package com.cursos2ee.web;
 
+import com.cursos2ee.db.CursoDAO;
+import com.cursos2ee.db.CursoDAODervyImpl;
 import com.cursos2ee.model.Curso;
 import com.cursos2ee.model.Nivel;
 
@@ -8,106 +10,68 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
 
 /**
+ * Controller server
+ * Manage application resources and navigation
  * Created by usuario on 13/05/2017.
  */
 public class ControllerServlet extends HttpServlet {
 
-    //FIXME connection pull
-    private Connection conn;
+    private static final String FORM_VIEW = "/cursos2ee/cursosForm.jsp";
+    private static final String LIST_VIEW = "/cursos2ee/list.jsp";
 
-    private static final String CURSOS_TABLE = "CURSOS";
+    private static final String CREATE_PARAM = "create";
+    private static final String TITULO_PARAM = "titulo";
+    private static final String HORAS_PARAM = "horas";
+    private static final String NIVEL_PARAM = "nivel";
+    private static final String ACTIVO_PARAM = "activo";
+    private static final String CURSOS_PARAM = "cursos";
+    private CursoDAO cursoDAO;
 
     @Override
     public void init() throws ServletException {
         super.init();
         try {
-            connectionToDerby();
+            cursoDAO = new CursoDAODervyImpl();
         } catch (SQLException e) {
             System.err.println("Error on data base connection");
         }
-    }
-
-    @Override
-    public void destroy() {
-        super.destroy();
-        try {
-            conn.close();
-        } catch (SQLException e) {
-            System.err.println("Error on data base connection");
-        }
-
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        final String create = req.getParameter("create");
-        if (create != null && create.equalsIgnoreCase("true")) {
-            getServletContext().getRequestDispatcher("/cursos2ee//cursosForm.jsp").forward(req, resp);
+        final boolean create = parseBooleanParam(req.getParameter(CREATE_PARAM));
+
+        String fowartdTo = "";
+        if (create) {
+            fowartdTo= FORM_VIEW;
         } else {
-            List<Curso> cursos = new ArrayList<>();
-            req.setAttribute("cursos", cursos);
-            //FIXME to dao
-            try {
-                Statement statement = conn.createStatement();
-                boolean existCursosTable = conn.getMetaData().getTables(null, null, CURSOS_TABLE, new String[]{"TABLE"}).next();
-                if (existCursosTable) {
-                    ResultSet resultSet = statement.executeQuery("SELECT * FROM "+CURSOS_TABLE+" WHERE activo=true");
-                    while (resultSet.next()) {
-                        cursos.add(new Curso(
-                                resultSet.getString("titulo"),
-                                resultSet.getInt("horas"),
-                                Nivel.getByCode(resultSet.getInt("nivel")),
-                                resultSet.getBoolean("activo")
-                        ));
-                    }
-                    resultSet.close();
-                }
-                statement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            getServletContext().getRequestDispatcher("/cursos2ee/list.jsp").forward(req, resp);
+            req.setAttribute(CURSOS_PARAM, cursoDAO.findAllAlphabetical());
+            fowartdTo= LIST_VIEW;
         }
 
+        getServletContext().getRequestDispatcher(fowartdTo).forward(req, resp);
+
+    }
+
+    private boolean parseBooleanParam(String create) {
+        return create != null && Boolean.parseBoolean(create);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("doPost");
+
         final Curso newCurso =new Curso(
-                req.getParameter("titulo"),
-                Integer.parseInt(req.getParameter("horas")),
-                Nivel.getByCode(Integer.parseInt(req.getParameter("nivel"))),
-                Boolean.parseBoolean(req.getParameter("activo"))
+                req.getParameter(TITULO_PARAM),
+                Integer.parseInt(req.getParameter(HORAS_PARAM)),
+                Nivel.getByCode(Integer.parseInt(req.getParameter(NIVEL_PARAM))),
+                Boolean.parseBoolean(req.getParameter(ACTIVO_PARAM))
         );
-        try {
-            Statement statement = conn.createStatement();
-            boolean existCursosTable = conn.getMetaData().getTables(null, null, CURSOS_TABLE, new String[]{"TABLE"}).next();
-            if (!existCursosTable) {
-                System.out.println("no existe");
-                String sql = "CREATE TABLE " + CURSOS_TABLE + " (titulo VARCHAR(500),activo BOOLEAN,nivel SMALLINT, horas INTEGER)";
-                System.out.println(sql);
-                statement.executeUpdate(sql);
-            }
-            int inserted = statement.executeUpdate(String.format("INSERT INTO %s (titulo,horas,nivel,activo) values('%s',%s,%d,%b  )", CURSOS_TABLE, newCurso.getTitulo(), newCurso.getHoras(), newCurso.getNivel().getCodigo(), newCurso.isActivo()));
-            System.out.println("insertado "+inserted);
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+        cursoDAO.save(newCurso);
 
         doGet(req,resp);
-    }
-
-    //FIXME to dao
-    private void connectionToDerby() throws SQLException {
-        String dbUrl = "jdbc:derby:CURSOS2eeDB;create=true";
-        conn = DriverManager.getConnection(dbUrl);
     }
 }
