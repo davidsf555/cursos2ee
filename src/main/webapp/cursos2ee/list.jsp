@@ -22,6 +22,6 @@
             </tr>
         <%}%>
         </table>
-        <a href="/cursos2ee/controller?create=true">Nuevo curso</a>
+        <a href="/cursos2ee/cursos?create=true">Nuevo curso</a>
     </body>
 </html>

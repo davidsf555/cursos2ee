@@ -5,13 +5,13 @@
 <web-app>
     <display-name>Cursos2ee</display-name>
     <servlet>
-        <servlet-name>controller</servlet-name>
+        <servlet-name>cursos</servlet-name>
         <servlet-class>
-            com.cursos2ee.web.ControllerServlet
+            com.cursos2ee.web.CursoServlet
         </servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>controller</servlet-name>
-        <url-pattern>/controller</url-pattern>
+        <servlet-name>cursos</servlet-name>
+        <url-pattern>/cursos</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -13,7 +13,7 @@ public class Curso {
     private Nivel nivel;
     private boolean activo;
 
-    public Curso(String titulo, int horas, Nivel nivel, boolean activo) {
+    public Curso(final String titulo, final int horas, final Nivel nivel, final boolean activo) {
         this.titulo = titulo;
         this.horas = horas;
         this.nivel = nivel;
@@ -24,7 +24,7 @@ public class Curso {
         return titulo;
     }
 
-    public void setTitulo(String titulo) {
+    public void setTitulo(final String titulo) {
         this.titulo = titulo;
     }
 
@@ -32,7 +32,7 @@ public class Curso {
         return horas;
     }
 
-    public void setHoras(int horas) {
+    public void setHoras(final int horas) {
         this.horas = horas;
     }
 
@@ -40,7 +40,7 @@ public class Curso {
         return nivel;
     }
 
-    public void setNivel(Nivel nivel) {
+    public void setNivel(final Nivel nivel) {
         this.nivel = nivel;
     }
 
@@ -48,15 +48,19 @@ public class Curso {
         return activo;
     }
 
-    public void setActivo(boolean activo) {
+    public void setActivo(final boolean activo) {
         this.activo = activo;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Curso curso = (Curso) o;
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Curso curso = (Curso) o;
         return horas == curso.horas &&
                 Objects.equals(titulo, curso.titulo) &&
                 nivel == curso.nivel;

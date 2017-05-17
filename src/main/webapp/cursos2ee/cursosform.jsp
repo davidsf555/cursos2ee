@@ -5,7 +5,7 @@
     </head>
     <body>
         <h1>Nuevo curso</h1>
-        <form action="/cursos2ee/controller" method="post">
+        <form action="/cursos2ee/cursos" method="post">
             <ul>
                 <li><Label for="titulo">Título</label><input type="text" name="titulo" id="titulo" /></li>
                 <li><Label for="horas">Horas</label><input type="number" name="horas" id="horas" min="1" /></li>

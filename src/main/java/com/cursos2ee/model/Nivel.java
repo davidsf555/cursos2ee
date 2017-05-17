@@ -10,7 +10,7 @@ public enum Nivel {
     private int codigo;
     private String descripcion;
 
-    private Nivel(int codigo,String descripcion){
+    private Nivel(final int codigo,final String descripcion){
         this.codigo = codigo;
         this.descripcion = descripcion;
     }
@@ -19,21 +19,15 @@ public enum Nivel {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
-
     public String getDescripcion() {
         return descripcion;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public static Nivel getByCode(int codigo){
-        for(Nivel nivel:values()){
-            if(nivel.getCodigo() == codigo) return nivel;
+    public static Nivel getByCode(final int codigo){
+        for(final Nivel nivel:values()){
+            if(nivel.getCodigo() == codigo) {
+                return nivel;
+            }
         }
         throw new RuntimeException("Bad Nivel:codigo value:"+codigo);
     }
