@@ -69,4 +69,12 @@ public enum ControllerCursoImpl implements Controller {
     private boolean parseBooleanParam(final Object create) {
         return create != null && Boolean.parseBoolean((String) create);
     }
+
+    /**
+     * Only for testing propose
+     * @deprecated
+     */
+    public void setDAO(CursoDAO cursoDAO){
+        this.cursoDAO = cursoDAO;
+    }
 }
