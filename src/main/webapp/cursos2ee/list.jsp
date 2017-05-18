@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="com.cursos2ee.model.Curso" %>
 <%@ page import="java.util.List" %>
 <jsp:useBean id="cursos" type="List<Curso>" scope="request" />
