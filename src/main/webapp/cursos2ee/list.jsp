@@ -5,10 +5,11 @@
 <html>
     <head>
         <title>Cursos2ee</title>
+        <link rel="stylesheet" href="/cursos2ee/pure-release-0.6.2/pure-min.css" />
     </head>
     <body>
         <h1>Cursos</h1>
-        <table>
+        <table class="pure-table pure-table-horizontal">
             <tr>
                 <th>T&iacute;tulo</th>
                 <th>Nivel</th>
@@ -23,6 +24,8 @@
             </tr>
         <%}%>
         </table>
-        <a href="/cursos2ee/cursos?create=true">Nuevo curso</a>
+        <p>
+            <a class="pure-button pure-button-primary" href="/cursos2ee/cursos?create=true">Nuevo curso</a>
+        </p>
     </body>
 </html>
