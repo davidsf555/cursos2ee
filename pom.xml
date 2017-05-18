@@ -23,13 +23,38 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
-            <version>8.1.15.v20140411</version>
+            <version>9.4.0.v20161208</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-webapp</artifactId>
-            <version>8.1.15.v20140411</version>
+            <version>9.4.0.v20161208</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-annotations</artifactId>
+            <version>9.4.0.v20161208</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-io</artifactId>
+            <version>9.4.0.v20161208</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlet</artifactId>
+            <version>9.4.0.v20161208</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-util</artifactId>
+            <version>9.4.0.v20161208</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-jsp</artifactId>
+            <version>9.2.11.v20150529</version>
         </dependency>
     </dependencies>
     <build>
@@ -55,27 +80,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.1.1</version>
-                <configuration>
-                    <warName>${project.artifactId}-${project.version}</warName>
-                    <archive>
-                        <manifest>
-                            <mainClass>Main</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>default-war</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>war</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
                     <execution>
@@ -83,7 +87,7 @@
                         <phase>prepare-package</phase>
                         <configuration>
                             <tasks>
-                                <move todir="${project.build.directory}/${project.artifactId}-${project.version}/">
+                                <move todir="${project.build.directory}/${project.artifactId}/com/cursos2ee/">
                                     <fileset dir="${project.build.directory}/classes/com/cursos2ee/">
                                         <include name="Main.class" />
                                     </fileset>
@@ -112,9 +116,30 @@
                             <excludeArtifactIds>jsp-api,jstl</excludeArtifactIds>
                             <excludes>META-INF/ECLIPSEF.*</excludes>
                             <outputDirectory>
-                                ${project.build.directory}/${project.artifactId}-${project.version}
+                                ${project.build.directory}/${project.artifactId}
                             </outputDirectory>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <warName>${project.artifactId}</warName>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.cursos2ee.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default-war</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>war</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>

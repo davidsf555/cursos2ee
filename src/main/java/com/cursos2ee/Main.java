@@ -1,7 +1,6 @@
 package com.cursos2ee;
 
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 import java.net.URL;
@@ -12,15 +11,12 @@ import java.security.ProtectionDomain;
  */
 public class Main {
     public static void main(String[] args) throws Exception {
-        Server server = new Server();
+        Server server = new Server(8080);
 
-        SelectChannelConnector connector = new SelectChannelConnector();
-        connector.setPort(80);
-        server.addConnector(connector);
-
+        WebAppContext webapp = new WebAppContext();
         ProtectionDomain domain = Main.class.getProtectionDomain();
         URL location = domain.getCodeSource().getLocation();
-        WebAppContext webapp = new WebAppContext();
+        webapp.setServer(server);
         webapp.setContextPath("/");
         webapp.setWar(location.toExternalForm());
         server.setHandler(webapp);
